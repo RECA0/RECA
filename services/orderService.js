@@ -140,12 +140,33 @@ exports.checkoutSession = asyncHandler(async (req, res, next) => {
   const totalOrderPrice = cartPrice + taxPrice + shippingPrice;
 
   // 3) Create stripe checkout session
+  // const session = await stripe.checkout.sessions.create({
+  //   line_items: [
+  //     {
+  //       name: req.user.name,
+  //       amount: totalOrderPrice * 100,
+  //       currency: 'egp',
+  //       quantity: 1,
+  //     },
+  //   ],
+  //   mode: 'payment',
+  //   success_url: `${req.protocol}://${req.get('host')}/orders`,
+  //   cancel_url: `${req.protocol}://${req.get('host')}/cart`,
+  //   customer_email: req.user.email,
+  //   client_reference_id: req.params.cartId,
+  //   metadata: req.body.shippingAddress,
+  // });
+
   const session = await stripe.checkout.sessions.create({
     line_items: [
       {
-        name: req.user.name,
-        amount: totalOrderPrice * 100,
-        currency: 'egp',
+        price_data: {
+          currency: 'egp',
+          product_data: {
+            name: req.user.name,
+          },
+          unit_amount: totalOrderPrice * 100,
+        },
         quantity: 1,
       },
     ],
@@ -156,6 +177,7 @@ exports.checkoutSession = asyncHandler(async (req, res, next) => {
     client_reference_id: req.params.cartId,
     metadata: req.body.shippingAddress,
   });
+  
 
   // 4) send session to response
   res.status(200).json({ status: 'success', session });

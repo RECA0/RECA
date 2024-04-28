@@ -52,6 +52,11 @@ exports.resizeProductImages = asyncHandler(async (req, res, next) => {
 
     next();
   }
+  //3-if update with no images or imageCover
+  if (!(req.files.imageCover) || !(req.files.images)) {
+    next()
+  }
+
 });
 
 // @desc    Get list of products

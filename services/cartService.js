@@ -29,7 +29,7 @@ exports.addProductToCart = asyncHandler(async (req, res, next) => {
     // create cart fot logged user with product
     cart = await Cart.create({
       user: req.user._id,
-      cartItems: [{ product: productId, color, price: product.price }],
+      cartItems: [{ product: productId, color, price: product.price, title: product.title, imageCover: product.imageCover }],
     });
   } else {
     // product exist in cart, update product quantity
@@ -44,7 +44,7 @@ exports.addProductToCart = asyncHandler(async (req, res, next) => {
       cart.cartItems[productIndex] = cartItem;
     } else {
       // product not exist in cart,  push product to cartItems array
-      cart.cartItems.push({ product: productId, color, price: product.price });
+      cart.cartItems.push({ product: productId, color, price: product.price, title: product.title, imageCover: product.imageCover });
     }
   }
 

@@ -9,13 +9,13 @@ const sendEmail = async (options) => {
     secure: true,
     auth: {
       user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASSWORD,
+      pass: process.env.EMAIL_PASS,
     },
   });
 
   // 2) Define email options (like from, to, subject, email content)
   const mailOpts = {
-    from: 'E-shop App <progahmedelsayed@gmail.com>',
+    from: 'Rica <Rica Officail>',
     to: options.email,
     subject: options.subject,
     text: options.message,

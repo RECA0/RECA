@@ -54,10 +54,6 @@ const productSchema = new mongoose.Schema(
         ref: 'SubCategory',
       },
     ],
-    brand: {
-      type: mongoose.Schema.ObjectId,
-      ref: 'Brand',
-    },
     ratingsAverage: {
       type: Number,
       min: [1, 'Rating must be above or equal 1.0'],
